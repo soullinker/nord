@@ -1,0 +1,97 @@
+Тестовое задание на должность php программиста
+
+Результаты тестового задания выложить на github или bitbucket и прислать ссылку на репозиторий.
+
+
+Задача 1.
+
+Реализовать класс дерева, наследующийся от абстрактного Tree:
+
+class Node
+{
+  private $name;
+
+  function __construct($name) {
+    $this->name = $name;
+  }
+}
+
+abstract class Tree
+{
+  // создает узел (если $parentNode == NULL - корень)
+  abstract protected function createNode(Node $node,$parentNode=NULL);
+
+  // удаляет узел и все дочерние узлы
+  abstract protected function deleteNode(Node $node);
+
+  // один узел делает дочерним по отношению к другому
+  abstract protected function attachNode(Node $node,Node $parent);
+
+  // получает узел по названию
+  abstract protected function getNode($nodeName);
+
+  // преобразует дерево со всеми элементами в ассоциативный массив
+  abstract protected function export();
+
+}
+
+Обеспечить выполнение следующего теста:
+// 1. создать корень country
+$tree->createNode(new Node('country'));
+// 2. создать в нем узел kiev
+$tree->createNode(new Node('kiev'), $tree->getNode('country'));
+// 3. в узле kiev создать узел kremlin
+$tree->createNode(new Node('kremlin'), $tree->getNode('kiev'));
+// 4. в узле kremlin создать узел house
+$tree->createNode(new Node('house'), $tree->getNode('kremlin'));
+// 5. в узле kremlin создать узел tower
+$tree->createNode(new Node('tower'), $tree->getNode('kremlin'));
+// 4. в корневом узле создать узел moskow
+$tree->createNode(new Node('moskow'), $tree->getNode('country'));
+// 5. сделать узел kremlin дочерним узлом у moskow
+$tree->attachNode($tree->getNode('kremlin'), $tree->getNode('moskow'));
+// 6. в узле kiev создать узел maidan
+$tree->createNode(new Node('maidan'), $tree->getNode('kiev'));
+// 7. удалить узел kiev
+$tree->deleteNode($tree->getNode('kiev'));
+// 8. получить дерево в виде массива, сделать print_r
+print_r($tree->export());
+
+
+Задача 2
+
+Знания MySQL + оптимизировать запросы
+
+Имеется 3 таблицы: info, data, link, есть запрос для получения данных:
+select * from data,link,info where link.info_id = info.id and link.data_id = data.id
+
+предложить варианты оптимизации.
+Запросы для создания таблиц:
+
+CREATE TABLE `info` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(255) default NULL,
+  `desc` text default NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=cp1251;
+
+CREATE TABLE `data` (
+  `id` int(11) NOT NULL auto_increment,
+  `date` date default NULL,
+  `value` INT(11) default NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=cp1251;
+
+CREATE TABLE `link` (
+  `data_id` int(11) NOT NULL,
+  `info_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=cp1251;
+
+
+Задача 3
+
+Cоздать 3 кнопки с названиями 1, 2, 3, расположенные друг над другом (HTML + JQuery).
+При нажатии на любую кнопку происходит смена имен кнопок (231, 312, 123), т. е.
+Верхней кнопке присваивается имя последующей и последней имя первой.
+
+
